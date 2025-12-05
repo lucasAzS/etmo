@@ -1,98 +1,52 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router'; // Hook de navegação do Expo Router
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Colors } from '../../constants/theme';
+import { GameButton } from '@/components/GameButton';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const router = useRouter();
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.logo}>Etimus</Text>
+
+      <ScrollView contentContainerStyle={styles.content}>
+        {/* Card Quis Diário */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Quis diário</Text>
+          <View style={styles.statsRow}>
+            <Ionicons name="flash" size={20} color={Colors.dark.primary} />
+            <Text style={styles.statsValue}>19 <Text style={styles.statsLabel}>dias seguidos</Text></Text>
+          </View>
+          {/* Ao clicar, vai para a rota /quiz */}
+          <GameButton title="Jogar" onPress={() => router.push('/quiz')} />
+        </View>
+
+        {/* Card Desafio Livre */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Desafio livre</Text>
+          <View style={styles.statsRow}>
+            <Ionicons name="flash-outline" size={20} color={Colors.dark.primary} />
+            <Text style={styles.statsValue}>5 <Text style={styles.statsLabel}>acertos seguidos</Text></Text>
+          </View>
+          <GameButton title="Continuar" onPress={() => {}} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  container: { flex: 1, backgroundColor: Colors.dark.background, padding: 20 },
+  logo: { fontSize: 40, color: Colors.dark.text, fontFamily: 'serif', fontStyle: 'italic', textAlign: 'center', marginVertical: 20 },
+  content: { gap: 20 },
+  card: { backgroundColor: Colors.dark.card, padding: 24, borderRadius: 20, alignItems: 'center' },
+  cardTitle: { color: Colors.dark.text, fontSize: 22, fontFamily: 'serif', fontStyle: 'italic', marginBottom: 10 },
+  statsRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
+  statsValue: { color: Colors.dark.text, fontSize: 20, fontWeight: 'bold', marginLeft: 8 },
+  statsLabel: { fontSize: 14, fontWeight: 'normal', color: Colors.dark.textSecondary },
 });
