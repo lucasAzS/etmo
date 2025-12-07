@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         borderColor: Colors.dark.card
     },
-    username: { marginBottom: 5 },
+    username: { marginBottom: 5, color: Colors.dark.text },
     level: { color: Colors.dark.textSecondary },
 
     statsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30 },
