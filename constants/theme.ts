@@ -17,14 +17,15 @@ export const Colors = {
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
   },
- dark: {
+  dark: {
     text: '#FFFFFF',
-    background: '#1A1A1A',
-    card: '#252525',
-    primary: '#FDCB58', // O Amarelo do Etimus
-    textSecondary: '#B0B0B0',
-    border: '#444444',
-    icon: '#FDCB58',
+    background: '#121212',
+    card: '#1E1E1E',
+    tint: '#F4C430',
+    primary: '#F4C430',
+    textSecondary: '#A0A0A0',
+    border: '#333333',
+    icon: '#F4C430',
   },
 };
 

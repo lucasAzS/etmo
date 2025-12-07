@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Colors } from '../constants/theme';
 
 interface OptionCardProps {
@@ -10,11 +10,11 @@ interface OptionCardProps {
 
 export function OptionCard({ label, selected, onPress }: OptionCardProps) {
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[
-        styles.card, 
+        styles.card,
         selected && styles.cardSelected
-      ]} 
+      ]}
       onPress={onPress}
       activeOpacity={0.8}
     >
@@ -27,8 +27,8 @@ export function OptionCard({ label, selected, onPress }: OptionCardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.dark.card,
-    paddingVertical: 18,
+    backgroundColor: '#2A2A2A', // Slightly lighter than background for card
+    paddingVertical: 16,
     borderRadius: 12,
     marginBottom: 12,
     alignItems: 'center',
@@ -36,15 +36,16 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   cardSelected: {
-    borderColor: Colors.dark.primary, // Borda amarela ao selecionar
+    borderColor: Colors.dark.primary,
   },
   text: {
-    color: Colors.dark.text,
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '600',
-    fontStyle: 'italic',
+    fontFamily: 'serif', // Matching the theme
   },
   textSelected: {
-    color: Colors.dark.primary,
+    color: '#FFFFFF', // Text remains white even when selected
+    fontWeight: 'bold',
   },
 });

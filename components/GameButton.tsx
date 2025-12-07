@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { Colors } from '../constants/theme';
 
 interface GameButtonProps {
@@ -20,15 +20,21 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.dark.primary,
     width: '100%',
-    paddingVertical: 16,
-    borderRadius: 30,
+    paddingVertical: 18,
+    borderRadius: 999, // Pill shape
     alignItems: 'center',
-    marginTop: 10,
+    marginVertical: 10,
+    shadowColor: Colors.dark.primary,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
   },
   text: {
-    color: '#1A1A1A', // Texto preto para contraste no amarelo
-    fontSize: 18,
-    fontWeight: 'bold',
-    fontStyle: 'italic', // O charme da fonte do design
+    color: '#000000', // Black text on yellow background
+    fontSize: 20,
+    fontWeight: '800', // Extra bold
+    fontFamily: 'serif',
+    fontStyle: 'italic',
   },
 });
