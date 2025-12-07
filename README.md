@@ -1,50 +1,50 @@
-# Welcome to your Expo app 👋
+# Etimus 🏛️
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Etimus** é um aplicativo mobile focado no aprendizado intuitivo e divertido da etimologia das palavras. Explore a origem dos termos, desafie seus conhecimentos com quizzes e aprofunde-se em nosso dicionário etimológico.
 
-## Get started
+## 📱 Funcionalidades
 
-1. Install dependencies
+- **Modo Clássico**: Adivinhe o significado ou sinônimo correto das palavras apresentadas.
+- **Quiz Diário**: Um desafio diário de 5 perguntas sobre origens de palavras. Teste seus conhecimentos e mantenha a ofensiva!
+- **Dicionário**: Um acervo detalhado com definições, origens e curiosidades sobre diversas palavras.
+- **Perfil do Usuário**: Acompanhe seu progresso, nível e estatísticas de jogo.
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Tecnologias Utilizadas
 
-2. Start the app
+- **React Native** (via Expo)
+- **TypeScript**
+- **Expo Router** (Navegação baseada em arquivos)
+- **Design System Customizado** (ThemedView, ThemedText)
 
-   ```bash
-   npx expo start
-   ```
+## 🚀 Como Rodar o Projeto
 
-In the output, you'll find options to open the app in a
+1.  **Instale as dependências**:
+    ```bash
+    npm install
+    ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+2.  **Inicie o projeto**:
+    ```bash
+    npx expo start
+    ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+3.  **Teste no dispositivo**:
+    - Use o app **Expo Go** no seu celular para escanear o QR Code.
+    - Ou pressione `a` para rodar no emulador Android / `i` para iOS.
 
-## Get a fresh project
+## 📂 Estrutura do Projeto
 
-When you're ready, run:
+- **`app/`**: Rotas e telas do aplicativo.
+    - **`(tabs)/`**: Navegação principal (Jogo, Quiz, Dicionário, Perfil).
+- **`components/`**: Componentes reutilizáveis de UI.
+- **`constants/`**: Dados estáticos (`etimus-data.ts`) e configurações de tema.
+- **`assets/`**: Imagens e ícones.
 
-```bash
-npm run reset-project
-```
+## 🗺️ Próximos Passos (Roadmap)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [ ] **Expansão de Conteúdo**: Adicionar mais palavras e categorias ao banco de dados (`etimus-data.ts`).
+- [ ] **Persistência de Dados**: Salvar o progresso do usuário, ofensiva e histórico de partidas localmente (AsyncStorage) ou em nuvem.
+- [ ] **Sistema de Conquistas**: Implementar badges e recompensas visuais.
+- [ ] **Polimento Visual**: Adicionar animações de transição e feedback visual (confetes, vibração) nos acertos.
+- [ ] **Sons e Áudio**: Efeitos sonoros para interações e respostas.
+- [ ] **Modo Escuro**: Aprimorar o suporte a temas.
