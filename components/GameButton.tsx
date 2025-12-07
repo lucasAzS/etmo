@@ -1,17 +1,17 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 import { Colors } from '../constants/theme';
 
 interface GameButtonProps {
   title: string;
   onPress: () => void;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
-export function GameButton({ title, onPress, style }: GameButtonProps) {
+export function GameButton({ title, onPress, style, textStyle }: GameButtonProps) {
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress} activeOpacity={0.8}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 }

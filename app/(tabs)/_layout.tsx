@@ -14,24 +14,21 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.dark.primary, // Yellow
-        tabBarInactiveTintColor: Colors.dark.textSecondary, // Grey
+        tabBarActiveTintColor: Colors.dark.primary,
+        tabBarInactiveTintColor: Colors.dark.textSecondary,
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        tabBarShowLabel: false,
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
             backgroundColor: Colors.dark.background,
             borderTopColor: Colors.dark.border,
-            height: 60, // Give it some height
-            paddingBottom: 10,
           },
           default: {
             backgroundColor: Colors.dark.background,
             borderTopColor: Colors.dark.border,
-            height: 60,
-            paddingBottom: 10,
           },
         }),
       }}>
@@ -43,24 +40,23 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="daily-quiz"
+        name="dictionary"
         options={{
-          title: 'Daily',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="calendar" color={color} />,
+          title: 'Dictionary',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="dictionary"
+        name="daily-quiz"
         options={{
-          title: 'Dicionário',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="book.fill" color={color} />,
+          href: null,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Perfil',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+          title: 'Menu',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="line.3.horizontal" color={color} />,
         }}
       />
     </Tabs>

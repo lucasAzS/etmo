@@ -4,7 +4,9 @@ import { OptionCard } from '@/components/OptionCard';
 import { ThemedText } from '@/components/themed-text';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { ETIMUS_WORDS, WordData } from '@/constants/etimus-data';
+import { HAS_LAUNCHED_KEY } from '@/constants/storage';
 import { Colors } from '@/constants/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -15,7 +17,32 @@ export default function EtimusScreen() {
   const [currentWord, setCurrentWord] = useState<WordData | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [options, setOptions] = useState<string[]>([]);
+  const [isFirstAccess, setIsFirstAccess] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => {
+    checkFirstAccess();
+  }, []);
+
+  const checkFirstAccess = async () => {
+    try {
+      const hasLaunched = await AsyncStorage.getItem(HAS_LAUNCHED_KEY);
+      if (hasLaunched === null) {
+        setIsFirstAccess(true);
+        await AsyncStorage.setItem(HAS_LAUNCHED_KEY, 'true');
+      } else {
+        setIsFirstAccess(false);
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
+  const resetFirstAccess = async () => {
+    await AsyncStorage.removeItem(HAS_LAUNCHED_KEY);
+    setIsFirstAccess(true);
+    Alert.alert("Resetado", "App agora está em estado de 'Primeiro Acesso'.");
+  };
 
   useEffect(() => {
     if (view === 'game') {
@@ -56,28 +83,32 @@ export default function EtimusScreen() {
 
   const LobbyView = () => (
     <ScrollView contentContainerStyle={styles.lobbyContainer}>
+      <ThemedText style={styles.topLabel}>HOME{isFirstAccess ? ' - PRIMEIRO ACESSO' : ''}</ThemedText>
+
       <View style={styles.header}>
-        <ThemedText type="serifTitle" style={styles.lobbyTitle}>Etimus</ThemedText>
+        <ThemedText type="serifTitle" lightColor={Colors.dark.text} style={styles.lobbyTitle}>Etimus</ThemedText>
       </View>
 
-      <View style={styles.statCard}>
-        <ThemedText type="subtitle" style={styles.statTitle}>Quis diário</ThemedText>
-        <View style={styles.statRow}>
-          <IconSymbol name="bolt.fill" size={24} color={Colors.dark.primary} />
-          <ThemedText style={styles.statValue}> 19 </ThemedText>
-          <ThemedText style={styles.statLabel}>dias{"\n"}seguidos</ThemedText>
-        </View>
-        <GameButton title="Jogar" onPress={() => router.push('/daily-quiz')} style={styles.smallButton} />
+      <GameButton title="Jogar" onPress={() => setView('game')} style={styles.mainButton} textStyle={styles.mainButtonText} />
+
+      <View style={styles.menuCard}>
+        <ThemedText type="subtitle" style={styles.cardTitle}>Quis diário</ThemedText>
+        <GameButton title="Jogar" onPress={() => router.push('/daily-quiz')} style={styles.cardButton} />
       </View>
 
-      <View style={styles.statCard}>
-        <ThemedText type="subtitle" style={styles.statTitle}>Desafio livre</ThemedText>
-        <View style={styles.statRow}>
-          <IconSymbol name="bolt.fill" size={24} color={Colors.dark.primary} />
-          <ThemedText style={styles.statValue}> 5 </ThemedText>
-          <ThemedText style={styles.statLabel}>acertos{"\n"}seguidos</ThemedText>
-        </View>
-        <GameButton title="Jogar" onPress={() => setView('game')} style={styles.smallButton} />
+      <View style={styles.menuCard}>
+        <ThemedText type="subtitle" style={styles.cardTitle}>Desafio livre</ThemedText>
+        <GameButton title="Jogar" onPress={() => setView('game')} style={styles.cardButton} />
+      </View>
+
+      <View style={[styles.menuCard, { borderColor: 'red', borderWidth: 1 }]}>
+        <ThemedText type="subtitle" style={[styles.cardTitle, { fontSize: 18 }]}>Área de Testes</ThemedText>
+        <GameButton
+          title="Resetar 1º Acesso"
+          onPress={resetFirstAccess}
+          style={[styles.cardButton, { backgroundColor: '#442222' }]}
+          textStyle={{ fontSize: 14 }}
+        />
       </View>
     </ScrollView>
   );
@@ -90,7 +121,7 @@ export default function EtimusScreen() {
           <TouchableOpacity onPress={() => setView('lobby')} style={styles.backButton}>
             <IconSymbol name="chevron.left" size={24} color={Colors.dark.textSecondary} />
           </TouchableOpacity>
-          <ThemedText type="serifTitle">Etimus</ThemedText>
+          <ThemedText type="serifTitle" lightColor=''>Etimus</ThemedText>
           <View style={{ width: 24 }} />
         </View>
 
@@ -139,25 +170,29 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.dark.background, padding: 20 },
   gameContainer: { flex: 1 },
   lobbyContainer: { paddingBottom: 40, alignItems: 'center' },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, marginTop: 10, width: '100%' },
+  topLabel: { color: Colors.dark.textSecondary, fontSize: 12, marginBottom: 20, alignSelf: 'flex-start', textTransform: 'uppercase' },
+  header: { alignItems: 'center', marginBottom: 20, width: '100%' }, // Changed to center
   backButton: { padding: 10 },
 
-  lobbyTitle: { fontSize: 42, marginBottom: 40 },
+  lobbyTitle: { fontSize: 48, marginBottom: 10, fontStyle: 'italic' },
 
-  statCard: {
+  mainButton: { width: '80%', marginBottom: 30, paddingVertical: 14, borderRadius: 25 },
+  mainButtonText: { fontSize: 20, fontWeight: 'bold' },
+
+  menuCard: {
     backgroundColor: Colors.dark.card,
     borderRadius: 20,
     padding: 24,
     width: '100%',
     marginBottom: 20,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#333', // Subtle border
   },
-  statTitle: { color: Colors.dark.text, marginBottom: 10, fontSize: 24, fontFamily: 'serif', fontStyle: 'italic' },
-  statRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
-  statValue: { color: Colors.dark.text, fontSize: 32, fontWeight: 'bold', marginHorizontal: 5 },
-  statLabel: { color: Colors.dark.textSecondary, fontSize: 12, lineHeight: 14 },
-  smallButton: { width: '80%', paddingVertical: 12 },
+  cardTitle: { color: Colors.dark.text, marginBottom: 15, fontSize: 24, fontFamily: 'serif', fontStyle: 'italic' },
+  cardButton: { width: '90%', paddingVertical: 12, borderRadius: 25 },
 
+  // Game styles mostly unchanged
   questionCard: { marginBottom: 30, alignItems: 'center' },
   instruction: { color: Colors.dark.textSecondary, fontSize: 16, marginBottom: 12 },
   targetWord: { color: Colors.dark.primary, fontWeight: 'bold' }, // Only used inline now
